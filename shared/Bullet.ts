@@ -10,6 +10,7 @@ export interface BulletState {
     positionY: number;
     velocityX: number;
     velocityY: number;
+    bounces: number;
 }
 
 export class Bullet {
@@ -25,14 +26,26 @@ export class Bullet {
         this.state.positionX += this.state.velocityX * dt;
         this.state.positionY += this.state.velocityY * dt;
 
-        if (this.game.isServer) {
-            // Check if collided with border
-            if (
-                Math.abs(this.state.positionX) > this.game.arenaSize / 2 ||
-                Math.abs(this.state.positionY) > this.game.arenaSize / 2
-            ) {
-                this.game.removeBullet(this.state.id);
+        if(this.state.positionX > this.game.arenaSize /2) {
+        this.state.velocityX = -Math.abs(this.state.velocityX) ;
+    this._didbounce();   
+    }
+
+        if(this.state.positionX < -this.game.arenaSize / 2) {
+            this.state.velocityX = Math.abs(this.state.velocityX) ;
+            this._didbounce(); 
             }
+if(this.state.positionY > this.game.arenaSize / 2) {
+        this.state.velocityY = -Math.abs(this.state.velocityY) ;
+        this._didbounce(); 
+        }
+
+        if(this.state.positionY < -this.game.arenaSize / 2) {
+            this.state.velocityY = Math.abs(this.state.velocityY) ;
+            this._didbounce(); 
+            }
+
+            if (this.game.isServer) {
 
             // Check if collided with another player
             for (let player of this.game.players) {
@@ -84,4 +97,10 @@ export class Bullet {
         player.damage(this.damage, this.state.shooterId);
         this.game.removeBullet(this.state.id);
     }
+    private _didbounce() {
+this.state.bounces += 1; 
+if (this.game.isServer && this.state.bounces >1) {
+this.game.removeBullet(this.state.id);
+}
+}
 }

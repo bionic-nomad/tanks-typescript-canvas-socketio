@@ -128,7 +128,8 @@ export class Game {
             positionY: 0,
             velocityX: 0,
             velocityY: 0,
-        });
+            bounces: 0,
+        });   
         this.bullets.push(bullet);
         return bullet;
     }
