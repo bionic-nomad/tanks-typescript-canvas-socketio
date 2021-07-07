@@ -176,7 +176,7 @@ function onPlayerKill(game: Game, state: PlayerState, killerId?: number) {
         let killer = game.state.players[killerId];
         if (killer) {
             killer.score >= 1;
-        let PLAYER_MOVE_SPEED = 300
+        let PLAYER_MOVE_SPEED = 900
         }
     }
 
