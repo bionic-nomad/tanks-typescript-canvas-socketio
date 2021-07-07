@@ -78,11 +78,12 @@ export function renderPlayer(
     // Draw body
     ctx.save();
     ctx.rotate(Math.atan2(-state.moveY, state.moveX) + Math.PI / 2);
-    let bodyWidth = client.assets.tankBodyRed.width * client.assets.scaleFactor;
+    let bodyWidth =
+        client.assets.tankBodyBlue.width * client.assets.scaleFactor;
     let bodyHeight =
-        client.assets.tankBodyRed.height * client.assets.scaleFactor;
+        client.assets.tankBodyBlue.height * client.assets.scaleFactor;
     ctx.drawImage(
-        client.assets.tankBodyRed,
+        client.assets.tankBodyBlue,
         -bodyWidth / 2,
         -bodyHeight / 2,
         bodyWidth,
