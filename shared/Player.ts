@@ -2,7 +2,8 @@ import { Client } from "../client/Client";
 import { Game, generateId } from "./Game";
 import { Utilities } from "./Utilities";
 import { EntityState } from "./Entity";
-import { BulletState, createBullet } from "./Bullet";
+import { BulletState, createBullet, updateBullet } from "./Bullet";
+import { updateBarrel } from "./Barrel";
 
 export interface PlayerState extends EntityState {
     id: number;
@@ -15,7 +16,7 @@ export interface PlayerState extends EntityState {
     score: number;
 }
 
-export const PLAYER_MOVE_SPEED: number = 500;
+export let PLAYER_MOVE_SPEED: number = 500; 
 export const PLAYER_RADIUS: number = 38;
 export const BARREL_LENGTH: number = 45;
 
@@ -175,8 +176,8 @@ function onPlayerKill(game: Game, state: PlayerState, killerId?: number) {
     if (killerId) {
         let killer = game.state.players[killerId];
         if (killer) {
-            killer.score >= 1;
-        let PLAYER_MOVE_SPEED = 900
+            killer.score += 1;
+            let PLAYER_MOVE_SPEED = +500; 
         }
     }
 
