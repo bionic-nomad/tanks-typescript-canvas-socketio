@@ -2,7 +2,7 @@ import { Client } from "../client/Client";
 import { EntityState } from "./Entity";
 import { Game, generateId } from "./Game";
 import { checkCircleCollision } from "./Physics";
-import { damagePlayer, PlayerState, PLAYER_RADIUS } from "./Player";
+import { damagePlayer, PlayerState, PLAYER_RADIUS, updatePlayer } from "./Player";
 
 export interface BulletState extends EntityState {
     id: number;
