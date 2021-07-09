@@ -1,9 +1,9 @@
 import { Client } from "../client/Client";
-import { Game, generateId } from "./Game";
+import { Game, generateId, updateGame } from "./Game";
 import { Utilities } from "./Utilities";
 import { EntityState } from "./Entity";
 import { BulletState, createBullet, updateBullet } from "./Bullet";
-import { updateBarrel } from "./Barrel";
+import { BARREL_RADIUS, updateBarrel } from "./Barrel";
 
 export interface PlayerState extends EntityState {
     id: number;
@@ -96,17 +96,18 @@ export function renderPlayer(
     ctx.save();
     ctx.rotate(state.aimDir + Math.PI / 2);
     let barrelWidth =
-        client.assets.tankBarrelRed.width * client.assets.scaleFactor;
+        client.assets.tankBarrelBlue.width * client.assets.scaleFactor;
     let barrelHeight =
-        client.assets.tankBarrelRed.height * client.assets.scaleFactor;
+        client.assets.tankBarrelBlue.height * client.assets.scaleFactor;
     ctx.drawImage(
-        client.assets.tankBarrelRed,
+        client.assets.tankBarrelBlue,
         -barrelWidth / 2,
         -barrelHeight * 0.75,
         barrelWidth,
         barrelHeight
     );
     ctx.restore();
+
 
     // Draw health
     let healthY = -PLAYER_RADIUS - 5;
@@ -183,3 +184,7 @@ function onPlayerKill(game: Game, state: PlayerState, killerId?: number) {
     // Remove this player
     delete game.state.players[state.id];
 }
+function x(x: any, arg1: number) {
+    throw new Error("Function not implemented.");
+}
+
