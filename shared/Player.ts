@@ -18,7 +18,7 @@ export interface PlayerState extends EntityState {
     velocityY: number;
 }
 
-export const PLAYER_MOVE_SPEED: number = 500; 
+export const PLAYER_MOVE_SPEED: number = 50; 
 export const PLAYER_RADIUS: number = 38;
 export const BARREL_LENGTH: number = 45;
 
@@ -49,8 +49,8 @@ export function createPlayer(game: Game): PlayerState {
 
 export function updatePlayer(game: Game, state: PlayerState, dt: number) {
     // Move the player based on the move input
-    // state.velocityX += state.moveX * PLAYER_MOVE_SPEED * dt;
-    // state.velocityY += state.moveY * PLAYER_MOVE_SPEED * dt;
+    state.velocityX += state.moveX * PLAYER_MOVE_SPEED * dt;
+    state.velocityY += state.moveY * PLAYER_MOVE_SPEED * dt;
     state.positionX += state.velocityX * dt;
     state.positionY += state.velocityY * dt;
 
@@ -193,4 +193,3 @@ function onPlayerKill(game: Game, state: PlayerState, killerId?: number) {
 function x(x: any, arg1: number) {
     throw new Error("Function not implemented.");
 }
-
