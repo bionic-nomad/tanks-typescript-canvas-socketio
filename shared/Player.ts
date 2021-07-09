@@ -49,8 +49,8 @@ export function createPlayer(game: Game): PlayerState {
 
 export function updatePlayer(game: Game, state: PlayerState, dt: number) {
     // Move the player based on the move input
-    state.velocityX += state.moveX * PLAYER_MOVE_SPEED * dt;
-    state.velocityY += state.moveY * PLAYER_MOVE_SPEED * dt;
+    // state.velocityX += state.moveX * PLAYER_MOVE_SPEED * dt;
+    // state.velocityY += state.moveY * PLAYER_MOVE_SPEED * dt;
     state.positionX += state.velocityX * dt;
     state.positionY += state.velocityY * dt;
 
