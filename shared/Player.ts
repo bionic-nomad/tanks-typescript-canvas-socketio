@@ -1,9 +1,8 @@
 import { Client } from "../client/Client";
-import { Game, generateId, updateGame } from "./Game";
+import { Game, generateId } from "./Game";
 import { Utilities } from "./Utilities";
 import { EntityState } from "./Entity";
-import { BulletState, createBullet, updateBullet } from "./Bullet";
-import { BARREL_RADIUS, updateBarrel } from "./Barrel";
+import { BulletState, createBullet } from "./Bullet";
 
 export interface PlayerState extends EntityState {
     id: number;
@@ -14,11 +13,9 @@ export interface PlayerState extends EntityState {
     moveY: number;
     health: number;
     score: number;
-    velocityX: number;
-    velocityY: number;
 }
 
-export const PLAYER_MOVE_SPEED: number = 50; 
+export const PLAYER_MOVE_SPEED: number = 500;
 export const PLAYER_RADIUS: number = 38;
 export const BARREL_LENGTH: number = 45;
 
@@ -35,8 +32,6 @@ export function createPlayer(game: Game): PlayerState {
             game.arenaSize / 2,
             Math.random()
         ),
-        velocityX: 0,
-        velocityY: 0,
         aimDir: 0,
         moveX: 0,
         moveY: 0,
@@ -49,10 +44,8 @@ export function createPlayer(game: Game): PlayerState {
 
 export function updatePlayer(game: Game, state: PlayerState, dt: number) {
     // Move the player based on the move input
-    state.velocityX += state.moveX * PLAYER_MOVE_SPEED * dt;
-    state.velocityY += state.moveY * PLAYER_MOVE_SPEED * dt;
-    state.positionX += state.velocityX * dt;
-    state.positionY += state.velocityY * dt;
+    state.positionX += state.moveX * PLAYER_MOVE_SPEED * dt;
+    state.positionY += state.moveY * PLAYER_MOVE_SPEED * dt;
 
     // Restrain to bounds
     state.positionX = Math.max(
@@ -85,12 +78,11 @@ export function renderPlayer(
     // Draw body
     ctx.save();
     ctx.rotate(Math.atan2(-state.moveY, state.moveX) + Math.PI / 2);
-    let bodyWidth =
-        client.assets.tankBodyBlue.width * client.assets.scaleFactor;
+    let bodyWidth = client.assets.tankBodyRed.width * client.assets.scaleFactor;
     let bodyHeight =
-        client.assets.tankBodyBlue.height * client.assets.scaleFactor;
+        client.assets.tankBodyRed.height * client.assets.scaleFactor;
     ctx.drawImage(
-        client.assets.tankBodyBlue,
+        client.assets.tankBodyRed,
         -bodyWidth / 2,
         -bodyHeight / 2,
         bodyWidth,
@@ -102,18 +94,17 @@ export function renderPlayer(
     ctx.save();
     ctx.rotate(state.aimDir + Math.PI / 2);
     let barrelWidth =
-        client.assets.tankBarrelBlue.width * client.assets.scaleFactor;
+        client.assets.tankBarrelRed.width * client.assets.scaleFactor;
     let barrelHeight =
-        client.assets.tankBarrelBlue.height * client.assets.scaleFactor;
+        client.assets.tankBarrelRed.height * client.assets.scaleFactor;
     ctx.drawImage(
-        client.assets.tankBarrelBlue,
+        client.assets.tankBarrelRed,
         -barrelWidth / 2,
         -barrelHeight * 0.75,
         barrelWidth,
         barrelHeight
     );
     ctx.restore();
-
 
     // Draw health
     let healthY = -PLAYER_RADIUS - 5;
@@ -189,7 +180,4 @@ function onPlayerKill(game: Game, state: PlayerState, killerId?: number) {
 
     // Remove this player
     delete game.state.players[state.id];
-}
-function x(x: any, arg1: number) {
-    throw new Error("Function not implemented.");
 }

@@ -335,6 +335,6 @@ function renderGame(client: Client, ctx: CanvasRenderingContext2D) {
         renderBarrel(client, client.game.state.barrels[barrelId], ctx);
     }
     for (let explosionId in client.game.state.explosions) {
-        renderExplosion(client, client.game.state.barrels[explosionId], ctx);
+        renderExplosion(client, client.game.state.explosions[explosionId], ctx);
     }
 }
