@@ -48,25 +48,24 @@ export function updateBullet(game: Game, state: BulletState, dt: number) {
     state.positionX += state.velocityX * dt;
     state.positionY += state.velocityY * dt;
 
-    if (state.positionX > game.arenaSize /2) {
+    if (state.positionX > game.arenaSize / 2) {
         state.velocityX = -Math.abs(state.velocityX);
-        didBounce (game,state);
+        didBounce(game, state);
     }
-    if (state.positionX < -game.arenaSize /2) {
+    if (state.positionX < -game.arenaSize / 2) {
         state.velocityX = Math.abs(state.velocityX);
-        didBounce (game,state);
+        didBounce(game, state);
     }
-if (state.positionY > game.arenaSize / 2) {
-    state.velocityY = -Math.abs(state.velocityY);
-    didBounce (game,state);    
-}
-if (state.positionY <- game.arenaSize /2) {
-    state.velocityY = Math.abs(state.velocityX);
-    didBounce (game,state);    
-}
+    if (state.positionY > game.arenaSize / 2) {
+        state.velocityY = -Math.abs(state.velocityY);
+        didBounce(game, state);
+    }
+    if (state.positionY < -game.arenaSize / 2) {
+        state.velocityY = Math.abs(state.velocityY);
+        didBounce(game, state);
+    }
 
     if (game.isServer) {
-        
         // Check if collided with another player
         for (let playerId in game.state.players) {
             let player = game.state.players[playerId];
@@ -124,9 +123,9 @@ function onPlayerCollision(
 }
 
 function didBounce(game: Game, state: BulletState) {
-    state.bounces += 1 ;
+    state.bounces += 1;
 
     if (state.bounces > 1) {
         delete game.state.bullets[state.id];
-}
+    }
 }
