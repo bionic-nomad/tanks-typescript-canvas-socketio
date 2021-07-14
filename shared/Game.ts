@@ -4,6 +4,7 @@ import { BulletState, updateBullet } from "./Bullet";
 import { EntityState } from "./Entity";
 import { ExplosionState, updateExplosion } from "./Explosion";
 import { PlayerState, updatePlayer } from "./Player";
+import { createTurret, TurretState, updateTurret } from "./Turret";
 import { Utilities } from "./Utilities";
 
 export interface Game {
@@ -22,6 +23,7 @@ export interface GameState {
     bullets: { [id: number]: BulletState };
     barrels: { [id: number]: BarrelState };
     explosions: { [id: number]: ExplosionState };
+    turrets: { [id: number]: TurretState };
 }
 
 export function createGame(isServer: boolean): Game {
@@ -38,6 +40,7 @@ export function createGame(isServer: boolean): Game {
             bullets: {},
             barrels: {},
             explosions: {},
+            turrets: {},
         },
     };
 
@@ -49,7 +52,13 @@ export function createGame(isServer: boolean): Game {
             createBarrel(game, positionX, positionY);
         }
     }
-
+// Procedurally create turrets
+if (isServer) {
+    createTurret(game, -250, -250, 0); // Top left
+    createTurret(game, 250, -250, 0); // Top right
+    createTurret(game, 250, 250, 0); // Bottom right
+    createTurret(game, -250, 250, 0); // Bottom left
+}
     return game;
 }
 
@@ -74,6 +83,9 @@ export function updateGame(game: Game) {
         updateBarrel(game, game.state.barrels[barrelId], dt);
     }
     for (let explosionId in game.state.explosions) {
-        updateExplosion(game, game.state.barrels[explosionId], dt);
+        updateExplosion(game, game.state.explosions[explosionId], dt);
+    }
+    for (let turretId in game.state.turrets) {
+        updateTurret(game, game.state.turrets[turretId], dt);
     }
 }
